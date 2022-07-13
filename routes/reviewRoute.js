@@ -78,10 +78,14 @@ const updateReview = asyncHandler(async (req, res) => {
   }
 
   try {
-    const updatedReview = await Review.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const updatedReview = await Review.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
     if (!updatedReview) {
       return res
         .status(404)
