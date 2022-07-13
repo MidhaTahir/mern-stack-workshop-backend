@@ -4,7 +4,7 @@ const asyncHandler = require("express-async-handler");
 const Review = require("../models/reviewModel.js");
 
 // @desc    fetch all reviews
-// @route   GET /reviews
+// @route   GET v1/reviews
 // @access  Public
 const getReviews = asyncHandler(async (req, res) => {
   const reviews = await Review.find({});
@@ -12,7 +12,7 @@ const getReviews = asyncHandler(async (req, res) => {
 });
 
 // @desc    post a review
-// @route   Post /reviews
+// @route   Post v1/review
 // @access  Public
 const postReview = asyncHandler(async (req, res) => {
   const { name, domain, feedback, rating } = req.body;
@@ -29,7 +29,7 @@ const postReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    delete a review
-// @route   Delete /reviews/:id
+// @route   Delete v1/review/:id
 // @access  Public
 const deleteReview = asyncHandler(async (req, res) => {
   try {
@@ -55,7 +55,7 @@ const deleteReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    update a review
-// @route   Update /reviews/:id
+// @route   Update v1/review/:id
 // @access  Public
 const updateReview = asyncHandler(async (req, res) => {
   //check allowed params
@@ -78,11 +78,11 @@ const updateReview = asyncHandler(async (req, res) => {
   }
 
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedReview = await Review.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
-    if (!updatedUser) {
+    if (!updatedReview) {
       return res
         .status(404)
         .json({ success: false, message: "Review not found" });
@@ -90,7 +90,7 @@ const updateReview = asyncHandler(async (req, res) => {
     return res.json({
       success: true,
       message: "Review Updated",
-      updatedUser,
+      updatedReview,
     });
   } catch (error) {
     console.log("Error:", error.message);
@@ -103,7 +103,7 @@ const updateReview = asyncHandler(async (req, res) => {
 });
 
 // @desc    get a review
-// @route   Get /reviews/:id
+// @route   Get v1/review/:id
 // @access  Public
 const getReview = asyncHandler(async (req, res) => {
   try {
@@ -119,10 +119,10 @@ const getReview = asyncHandler(async (req, res) => {
   }
 });
 
-router.route("/").get(getReviews);
-router.route("/:id").get(getReview);
-router.route("/").post(postReview);
-router.route("/:id").delete(deleteReview);
-router.route("/:id").put(updateReview);
+router.route("/reviews/").get(getReviews);
+router.route("/review/:id").get(getReview);
+router.route("/review/").post(postReview);
+router.route("/review/:id").delete(deleteReview);
+router.route("/review/:id").put(updateReview);
 
 module.exports = router;

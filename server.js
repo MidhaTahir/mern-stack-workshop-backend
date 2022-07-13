@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
   res.send("Api is running...");
 });
 
-app.use("/reviews", reviewRoute);
+app.use("/v1", reviewRoute);
 
 // This will handle 404 requests.
 app.use("*", function (req, res) {
